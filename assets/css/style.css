@@ -1,18 +1,22 @@
 
 body{
   font-size:20px;
+  font-family: 'VT323', monospace;
+  font-family: 'Shadows Into Light', cursive;
+  font-family: 'Gloria Hallelujah', cursive;
   font-weight: 600;
   background: url("../images/backgroundTwo.jpeg");
 }
 .container{
   text-align: center;
   width: 800px;
-  min-height: 400px;
+  min-height: 500px;
   margin: 0 auto;
-  background: #bdd8e6;
+  background: #696d7f;
 }
 h1{
-  padding: 10px;
+  padding: 10px 0px 0px 0px;
+  color: #4c0000;
 }
 .timer{
 
@@ -22,7 +26,6 @@ h1{
 }
 .answers{
   margin-top: 20px;
-  font-weight: 400;
 }
 .start , .restart{
   font-size: 20px;
@@ -35,13 +38,13 @@ h1{
   border: 1px solid black;
 }
 .choices{
-  width: 300px;
+  width: 500px;
   line-height: 30px;
   margin: 3px auto;
 }
 .choices img{
   width: 300px;
   height: 200px;
-  border: 2px solid #666666;
+  border: 1px solid #666666;
 }
 

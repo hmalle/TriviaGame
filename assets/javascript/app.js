@@ -9,8 +9,8 @@ var q=[
     ans3:"LHR",
     ans4:"LHW" },
   { qn  :"Who plays Lara Croft in the Tomb Raider series of films?",
-    ans :"Angelia Jolie",
-    ans1:"Angelia Jolies",
+    ans :"Angelina Jolie",
+    ans1:"Angelina Jolie",
     ans2:"Minnie Driver",
     ans3:"Nell McAndrew",
     ans4:"Jennifer Aniston" },
@@ -37,7 +37,31 @@ var q=[
     ans1: "Ukraine",
     ans2: "Slovakia",
     ans3: "Hungary",
-    ans4: "Russia"}
+    ans4: "Russia"},
+  { qn  :"In California, it is illegal to eat oranges while doing what?",
+    ans :"Bathing",
+    ans1:"Gardening",
+    ans2:"Bathing",
+    ans3:"Driving",
+    ans4:"Working on a computer"},
+  { qn  :"In what place was Xmax once illegal?",
+    ans :"England",
+    ans1:"Brazil",
+    ans2:"Russia",
+    ans3:"France",
+    ans4:"England"},
+  { qn  :"Coulrophobia is a fear of what?",
+    ans :"Clowns",
+    ans1:"Jews",
+    ans2:"Sacred Things",
+    ans3:"Clowns",
+    ans4:"Old People" },
+  { qn  :"How many dimples are there on a regular golf ball?",
+    ans :"336",
+    ans1:"418",
+    ans2:"336",
+    ans3:"294",
+    ans4:"377" }
   ]
 
   var correct;
@@ -73,10 +97,10 @@ var q=[
   function displayAnswer(answerState){
     clearInterval(timerId);
     $(".answers").empty();
-    var correctDiv=$("<div class='choices'>").html("<p>Good Job</p>");
-    var incorrectDiv=$("<div class='choices'>").html("<p>Wrong</p>");
-    var timeoutDiv=$("<div class='choices'>").html("<p>Out of Time</p>");
-    var correctionDiv=$("<div class='choices'>").html("<p>The correct answer is: "+q[index].ans+"</p>");
+    var correctDiv=$("<div class='choices'>").html("Good Job!!!");
+    var incorrectDiv=$("<div class='choices'>").html("Wrong!!!");
+    var timeoutDiv=$("<div class='choices'>").html("Out of Time!!!");
+    var correctionDiv=$("<div class='choices'>").html("The correct answer is: "+q[index].ans);
     var imgDiv = $("<div class='choices'>");
     if(answerState==="correct"){
       imgDiv.html("<img src='assets/images/correct.gif'>");
@@ -93,7 +117,6 @@ var q=[
       $(".answers").append(correctionDiv);
       $(".answers").append(imgDiv)    
     }
-    console.log(answerState);
     index++;
     questioning(index)
   }
@@ -157,7 +180,6 @@ var q=[
     //in case the user answered the question
     //get the click events and get the user choice text choice.
     var answer = $(this).text(); //wonderful
-    console.log( answer );
     if( answer === q[index].ans){
       correct++;
       displayAnswer("correct");
