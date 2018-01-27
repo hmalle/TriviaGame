@@ -2,6 +2,18 @@
 $(document).ready(function(){
 
 var q=[
+  { qn: "What is the International Air Transport Association airport code for Heathrow Airport?",
+    ans :"LHR",
+    ans1:"HRW",
+    ans2:"HTR",
+    ans3:"LHR",
+    ans4:"LHW" },
+  { qn  :"Who plays Lara Croft in the Tomb Raider series of films?",
+    ans :"Angelia Jolie",
+    ans1:"Angelia Jolies",
+    ans2:"Minnie Driver",
+    ans3:"Nell McAndrew",
+    ans4:"Jennifer Aniston" },
   { qn: "In the year 1900, What were the most popular boy and girl first names?",
     ans :"John and Mary",
     ans1:"William and Elizabeth",
@@ -66,19 +78,22 @@ var q=[
     var correctDiv=$("<div class='choices'>").html("<p>Good Job</p>");
     var incorrectDiv=$("<div class='choices'>").html("<p>Wrong</p>");
     var timeoutDiv=$("<div class='choices'>").html("<p>Out of Time</p>");
-    var correctionDiv=$("<div class='choices'>").html("<p>The correct answer is"+q[index].ans+"</p>");
-    //var imgDiv = $("<div class='choices'>").html("<img src='"+q[index].imgUrl+"'>");
+    var correctionDiv=$("<div class='choices'>").html("<p>The correct answer is: "+q[index].ans+"</p>");
+    var imgDiv = $("<div class='choices'>");
     if(answerState==="correct"){
+      imgDiv.html("<img src='assets/images/correct.gif'>");
       $(".answers").append(correctDiv);
-      //$(".answers").append(imgDiv);
+      $(".answers").append(imgDiv);
     }else if(answerState==="incorrect"){ 
+      imgDiv.html("<img src='assets/images/incorrect.gif'>");
       $(".answers").append(incorrectDiv);
       $(".answers").append(correctionDiv);
-      //$(".answers").append(imgDiv);
+      $(".answers").append(imgDiv);
     }else if(answerState==="timeout"){
+      imgDiv.html("<img src='assets/images/timeout.gif'>");
       $(".answers").append(timeoutDiv);
       $(".answers").append(correctionDiv);
-      //$(".answers").append(imgDiv)    
+      $(".answers").append(imgDiv)    
     }
     console.log(answerState);
     clearTimeout(timeoutId);
@@ -117,8 +132,15 @@ var q=[
 
   function questioning(index){
     //TODO: Get rid of this function and call straight to loadQuestion
-    loadQuestion( q[index]);
-    startTimer();
+    if(index != 0){
+      var thatDelay = setTimeout(function(){
+        loadQuestion( q[index]);
+        startTimer();
+      },2300);
+    }else{
+      loadQuestion(q[index]);
+      startTimer();
+    }
   }
 
   $(".answers").append("<button class='start'>Start</button>"); //load the start button.
