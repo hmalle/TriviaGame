@@ -8,6 +8,19 @@ body{
   width: 800px;
   margin: 0 auto;
 }
+.timer{
+
+}
 .answers{
 
+}
+.start{
+  font-size: 20px;
+}
+.choices:hover{
+  background-color: #444444;
+}
+.choices{
+  width: 300px;
+  margin: 3px auto;
 }
