@@ -1,6 +1,7 @@
 
 body{
   font-size:20px;
+  font-weight: 600;
   background-color: #345454;
 }
 .container{
@@ -11,16 +12,25 @@ body{
 .timer{
 
 }
-.answers{
-
+.question{
+  margin-top: 15px;
 }
-.start{
+.answers{
+  margin-top: 20px;
+  font-weight: 400;
+}
+.start , .restart{
   font-size: 20px;
+}
+.start:hover , .restart:hover{
+  border: 2px solid black;
 }
 .choices:hover{
   background-color: #444444;
+  border: 1px solid black;
 }
 .choices{
   width: 300px;
+  line-height: 30px;
   margin: 3px auto;
 }

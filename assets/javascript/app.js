@@ -28,73 +28,97 @@ var q=[
     ans4: "Russia"}
   ]
 
-  var correct=0;
-  var incorrect=0;
-  var unanswered=0;
-  var nextQuestion;
-  var index = 0; //quesition index.
-  var timeLeft = 30;
-  var timerid;
-  var timeout;
-
-  function loadQuestion( question ){
-    //gets a specific question, aka one element in the above array of questions
-    $(".question").html(question.qn);
-    $(".ans1").html(question.ans1);
-    $(".ans2").html(question.ans2);
-    $(".ans3").html(question.ans3);  
-    $(".ans4").html(question.ans4);
-  }
-
-  function correctAnswer(question){
-    $("answer").empty();
-    $(".answer").append("<p>Good Job </p>");
-    //$("#answer").append("<img src='"+question.url+"'>");
-    var timeout = setTimeout(clearTimeout(timeout), 1000);
-  }
-
-  function wrongAnswer(question){
-    //a function that fires between questions.
-    $(".answer").empty();
-    $(".answer").append("<p>The correct answer is "+question.ans+"</p>");
-    //$(".answer").append("<img src='"+question.url+"'>");
-    var timeout = setTimeout(clearTimeout(timeout) ,1000);
-  }
-
-  function gameOver(){
-    //a game over function. Displays the results 
-    $(".question").text("All Done, Here is how you did");
-    $(".ans1").text("Correct answers "+correct);
-    $(".ans2").text("Incorrect answers "+incorrect);
-    $(".ans3").text("Unanswered "+ unanswered);
-    $(".ans4").html("<button class='.restart'>Restart</button>");
-  }
+  var correct;
+  var incorrect;
+  var unanswered;
+  var index ;
+  var timeLeft;
+  var timerId;
+  var timeoutId;
 
   function initializeVariables(){
     correct=0;
     incorrect=0;
     unanswered = 0;
-    nextQuestion = true;
     index = 0;
-    timeout = false;
-    //timeLeft = 30; //initialized in the startTimer
-    //except the interval;
+    timeLeft = 0;
+    timerId = 0;
+    timeoutId = 0;
+  }
+
+  function loadQuestion( question ){
+    //gets a specific question, aka one element in the above array of questions
+    $(".question").html(question.qn);
+    $(".answers").empty();
+    var choice1 =$("<div class='choices'>");
+    var choice2 =$("<div class='choices'>");
+    var choice3 =$("<div class='choices'>");
+    var choice4 =$("<div class='choices'>");
+
+    choice1.html(question.ans1);
+    choice2.html(question.ans2);
+    choice3.html(question.ans3);  
+    choice4.html(question.ans4);
+    $(".answers").append(choice1);
+    $(".answers").append(choice2);
+    $(".answers").append(choice3);
+    $(".answers").append(choice4);
+  }
+
+  function displayAnswer(answerState){
+    clearInterval(timerId);
+    if(answerState==="correct"){
+      $("answer").empty();
+      $(".answer").append("<p>Good Job </p>");
+      //$("#answer").append("<img src='"+question.url+"'>");
+    }else if(answerState==="incorrect"){ 
+      $(".answer").empty();
+      $(".answer").append("<p>Wrong </p>");
+      $(".answer").append("<p>The correct answer is "+q[index].ans+"</p>");
+      //$("#answer").append("<img src='"+question.url+"'>");
+    }else if(answerState==="timeout"){
+      $(".answer").empty();
+      $(".answer").append("<p>Time out </p>");
+      $(".answer").append("<p>The correct answer is "+q[index].ans+"</p>");
+      //$("#answer").append("<img src='"+question.url+"'>");
+    }
+    console.log(answerState);
+    clearTimeout(timeoutId);
+    if(index+1 === q.length){ 
+      gameOver(); 
+    }else{
+      index++;
+      questioning(index)
+    }
+  }
+
+  function gameOver(){
+    //a game over function. Displays the results 
+    $(".question").empty();
+    $(".answers").empty();
+    $(".question").append("<h3>All Done, Here is how you did</h3>");
+    $(".answers").append("<p>Correct answers "+correct+"</p>");
+    $(".answers").append("<p>Incorrect answers "+incorrect+"</p>");
+    $(".answers").append("<p>Unanswered "+ unanswered+"</p>");
+    $(".answers").append("<button class='restart'>Restart</button>");
   }
 
   function startTimer(){
-    timeLeft = 30; //30 seconds.
+    timeLeft = 15; //30 seconds.
     $(".timer").html("The time remaining is: "+timeLeft+" seconds");
-    timerid=setInterval(function timer(){
+    timerId=setInterval(function timer(){
       timeLeft--;
       if(timeLeft <= 0){
-        clearInterval(timerid);
+        clearInterval(timerId);
         unanswered++;
+        displayAnswer("timeout");
       }
       $(".timer").html("The time remaining is: "+timeLeft+" seconds");
     }, 1000);
   }
 
   function questioning(index){
+    //TODO: Get rid of this function and call straight to loadQuestion
     loadQuestion( q[index]);
     startTimer();
   }
@@ -104,31 +128,28 @@ var q=[
     $(".start").remove();
     initializeVariables();
     questioning(index);
-    console.log("in the start");
   }); 
+
+  $(".answers").on("click",".restart",function(){ 
+    //NOT DRY AT ALL(copy and paste from the $(".start").
+    $(".answers").empty();
+    initializeVariables();
+    questioning(index);
+  });
 
   $(".answers").on("click",".choices",function(){
     //in case the user answered the question
     //get the click events and get the user choice text choice.
     var answer = $(this).text(); //wonderful
     console.log( answer );
-    clearInterval(timerid); //stop the timer once an answer has been entered
     if( answer === q[index].ans){
       correct++;
-      correctAnswer(q[index]);
-    }
-    if( answer != q[index].ans){
+      displayAnswer("correct");
+    } else if( answer != q[index].ans){
       incorrect++;
-      wrongAnswer(q[index]);
+      displayAnswer("incorrect");
     }
-    if(index<q.length-1){ questioning(index++); }
   });
-  //now I have to check for timeouts and end of questions
-  if(timeout){
-    unanswered++;
-    clearInterval(timeid);
-    if(index< q.length -1){ questioning(index++); }
-  }
-  if(index+1 >= q.length){ gameOver(); }
+
 }); 
 
