@@ -50,15 +50,10 @@ var q=[
     //gets a specific question, aka one element in the above array of questions
     $(".question").html(question.qn);
     $(".answers").empty();
-    var choice1 =$("<div class='choices'>");
-    var choice2 =$("<div class='choices'>");
-    var choice3 =$("<div class='choices'>");
-    var choice4 =$("<div class='choices'>");
-
-    choice1.html(question.ans1);
-    choice2.html(question.ans2);
-    choice3.html(question.ans3);  
-    choice4.html(question.ans4);
+    var choice1 =$("<div class='choices'>").html(question.ans1);
+    var choice2 =$("<div class='choices'>").html(question.ans2);
+    var choice3 =$("<div class='choices'>").html(question.ans3);
+    var choice4 =$("<div class='choices'>").html(question.ans4);
     $(".answers").append(choice1);
     $(".answers").append(choice2);
     $(".answers").append(choice3);
@@ -67,20 +62,23 @@ var q=[
 
   function displayAnswer(answerState){
     clearInterval(timerId);
+    $(".answers").empty();
+    var correctDiv=$("<div class='choices'>").html("<p>Good Job</p>");
+    var incorrectDiv=$("<div class='choices'>").html("<p>Wrong</p>");
+    var timeoutDiv=$("<div class='choices'>").html("<p>Out of Time</p>");
+    var correctionDiv=$("<div class='choices'>").html("<p>The correct answer is"+q[index].ans+"</p>");
+    //var imgDiv = $("<div class='choices'>").html("<img src='"+q[index].imgUrl+"'>");
     if(answerState==="correct"){
-      $("answer").empty();
-      $(".answer").append("<p>Good Job </p>");
-      //$("#answer").append("<img src='"+question.url+"'>");
+      $(".answers").append(correctDiv);
+      //$(".answers").append(imgDiv);
     }else if(answerState==="incorrect"){ 
-      $(".answer").empty();
-      $(".answer").append("<p>Wrong </p>");
-      $(".answer").append("<p>The correct answer is "+q[index].ans+"</p>");
-      //$("#answer").append("<img src='"+question.url+"'>");
+      $(".answers").append(incorrectDiv);
+      $(".answers").append(correctionDiv);
+      //$(".answers").append(imgDiv);
     }else if(answerState==="timeout"){
-      $(".answer").empty();
-      $(".answer").append("<p>Time out </p>");
-      $(".answer").append("<p>The correct answer is "+q[index].ans+"</p>");
-      //$("#answer").append("<img src='"+question.url+"'>");
+      $(".answers").append(timeoutDiv);
+      $(".answers").append(correctionDiv);
+      //$(".answers").append(imgDiv)    
     }
     console.log(answerState);
     clearTimeout(timeoutId);
