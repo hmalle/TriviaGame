@@ -46,7 +46,6 @@ var q=[
   var index ;
   var timeLeft;
   var timerId;
-  var timeoutId;
 
   function initializeVariables(){
     correct=0;
@@ -55,7 +54,6 @@ var q=[
     index = 0;
     timeLeft = 0;
     timerId = 0;
-    timeoutId = 0;
   }
 
   function loadQuestion( question ){
@@ -96,13 +94,8 @@ var q=[
       $(".answers").append(imgDiv)    
     }
     console.log(answerState);
-    clearTimeout(timeoutId);
-    if(index+1 === q.length){ 
-      gameOver(); 
-    }else{
-      index++;
-      questioning(index)
-    }
+    index++;
+    questioning(index)
   }
 
   function gameOver(){
@@ -131,11 +124,14 @@ var q=[
   }
 
   function questioning(index){
-    //TODO: Get rid of this function and call straight to loadQuestion
     if(index != 0){
       var thatDelay = setTimeout(function(){
-        loadQuestion( q[index]);
-        startTimer();
+        if(index=== q.length){
+          gameOver();
+        }else{
+          loadQuestion( q[index]);
+          startTimer();
+        }
       },2300);
     }else{
       loadQuestion(q[index]);
