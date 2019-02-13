@@ -47,4 +47,7 @@ h1{
   height: 200px;
   border: 1px solid #666666;
 }
-
+.restart{
+  border: "1px solid #666666";
+  border-radius: 2px;
+}

@@ -62,7 +62,7 @@ var q=[
     ans2:"336",
     ans3:"294",
     ans4:"377" }
-  ]
+];
 
   var correct;
   var incorrect;
@@ -125,11 +125,13 @@ var q=[
     //a game over function. Displays the results 
     $(".question").empty();
     $(".answers").empty();
+    var stats = $('<div class="stats">');
     $(".question").append("<h3>All Done, Here is how you did</h3>");
-    $(".answers").append("<p>Correct answers "+correct+"</p>");
-    $(".answers").append("<p>Incorrect answers "+incorrect+"</p>");
-    $(".answers").append("<p>Unanswered "+ unanswered+"</p>");
-    $(".answers").append("<button class='restart'>Restart</button>");
+    $(".stats").append("<p>Correct answers "+correct+"</p>");
+    $(".stats").append("<p>Incorrect answers "+incorrect+"</p>");
+    $(".stats").append("<p>Unanswered "+ unanswered+"</p>");
+    $(".stats").append("<button class='restart'>Restart</button>");
+    $(".answers").append(stats);
   }
 
   function startTimer(){

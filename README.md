@@ -1,4 +1,4 @@
 # TriviaGame
 
-A simple Trivia Game to practice JavaScript and JQuery!!!
+A simple Trivia Game using JavaScript and JQuery!!!
 
